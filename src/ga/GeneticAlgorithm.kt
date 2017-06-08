@@ -3,10 +3,14 @@ package ga
 /**
  * Created by caiofilipemr on 08/06/17.
  */
-interface GeneticAlgorithm {
+interface GeneticAlgorithm<T> {
+    val feasibleSolution: T;
+
     fun populate();
-    fun mutation();
-    fun crossover();
+    fun avaliation();
     fun selection();
-    fun generations();
+    fun crossover();
+    fun mutation();
+    fun extinction();
+    fun generate();
 }
