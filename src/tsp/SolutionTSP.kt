@@ -7,7 +7,7 @@ import ga.Solution
  */
 open class SolutionTSP(solution: Array<Int>) : Solution<Array<Int>> {
     override fun cost() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        return
     }
 
     override fun get(i: Int) {
