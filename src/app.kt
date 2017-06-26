@@ -27,8 +27,8 @@ fun aleatorySolution(size: Int) : SolutionTSP {
  */
 fun main(args: Array<String>) {
     val nVertices = arrayOf(10, 250, 500, 750)
-    val popSize = arrayOf(100, 500, 1000)
-    val years = arrayOf(100, 500, 1000)
+    val popSize = arrayOf(100, 500, 1000, 5000)
+    val years = arrayOf(100, 500, 1000, 10000)
     val reportFile = File("report/report.txt")
     val report = StringBuilder()
 
@@ -55,10 +55,11 @@ fun main(args: Array<String>) {
             var k = 0
             while (k < years.size) {
                 var l = 0
-                while (l < 3) {
+                while (l < 1) {
                     val ga = GeneticAlgorithmTSP(solution, popSize[j], years[k], 20)
                     ga.generate()
-                    report.append(getResults(ga.champion, nVertices[i], popSize[j], years[k], l+1, reportFile))
+                    val str = getResults(ga.champion, nVertices[i], popSize[j], years[k], l+1, reportFile)
+                    report.append(str)
                     println("$l-$k-$j-$i")
                     ++l
                 }

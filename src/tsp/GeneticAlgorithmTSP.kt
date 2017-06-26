@@ -79,11 +79,10 @@ class GeneticAlgorithmTSP(override val feasibleSolution: SolutionTSP,
 
     override fun crossover() {
         var i = 0
-        while (i < toCrossover.size - 1) {
+        while (i < toCrossover.size) {
             toMutate.plusAssign(cross(toCrossover[i], toCrossover[i+1]))
-            ++i
+            i += 2
         }
-        toMutate.plusAssign(cross(toCrossover[toCrossover.size-1], toCrossover[0]))
     }
 
     fun mutate(solution: SolutionTSP) : SolutionTSP {
@@ -104,16 +103,19 @@ class GeneticAlgorithmTSP(override val feasibleSolution: SolutionTSP,
         while (newPopulation.size < populationSize) {
             newPopulation.plusAssign(mutate(champion))
         }
-        population = newPopulation
+        population.sortBy { it.cost() }
+        newPopulation.sortBy { it.cost() }
+        population.removeAll(population.subList((populationSize * 0.4).toInt(), populationSize))
+        population.addAll(newPopulation.subList(0, populationSize - population.size))
         population.forEach { sol ->
             if (sol.cost() < champion.cost()) {
                 champion = sol
             }
         }
         champion = SolutionTSP(champion.solution.clone())
-        toCrossover = mutableListOf()
-        toMutate = mutableListOf()
-        newPopulation = mutableListOf()
+        toCrossover.clear()
+        toMutate.clear()
+        newPopulation.clear()
     }
 
     override fun generate() {
